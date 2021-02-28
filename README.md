@@ -1,7 +1,7 @@
 # Portfolio Insight
-This tool provides a live graph view of your portfolio against your friends, market indexes like SP500, DJI, NASDAQ, etc.
+Portfolio Insight provides a live view/comparison of your portfolio performance against your friends, market indexes like SP500, DJI, NASDAQ, etc.
 
-It also let's you store your historical data of your portfolio performance in raw form which can be later used for analytical/machine learning purposes.
+It also lets you store your portfolio performance data in raw form, which can be later used for analytical/machine learning purposes.
 
 ## High Level Design
 ![](design/design-portfolio-insight.jpg)
