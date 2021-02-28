@@ -1,0 +1,238 @@
+<head>
+  <!-- Load plotly.js into the DOM -->
+  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+</head>
+
+<body>
+  <head>
+    <link rel="stylesheet" href="myGraphs.css">
+  </head>
+  <a href=""><div id="headerDiv">P<del>o</del>rtf<del>o</del>li<del>o</del>   I<del>n</del>S<del>i</del>G<del>h</del>T</div></a>
+  <div align='center' class='marginTop30' id='myDiv'></div>
+  <div align='center' class='marginTop30' id='myDiv2'></div>
+  <div align='center' id="footerDiv">&#169; 2021 P<del>o</del>rtf<del>o</del>li<del>o</del>   I<del>n</del>S<del>i</del>G<del>h</del>T. All Rights Reserved.</div>
+</body>
+
+<script>
+
+function randomStringFn(len, charSet) {
+    charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var randomString = '';
+    for (var i = 0; i < len; i++) {
+        var randomPoz = Math.floor(Math.random() * charSet.length);
+        randomString += charSet.substring(randomPoz,randomPoz+1);
+    }
+  console.log(randomString);
+  return randomString;
+}
+const fetchCSV = (randomString) => 
+  //var randomStringVal = randomStringFn(8);
+  Plotly.d3.csv("http://localhost:8080/live-graph/Akash-DayGain.txt?random=" + randomString , function(err, rows){
+  function unpack(rows, key) {
+  return rows.map(function(row) { return row[key]; });
+}
+Plotly.d3.csv("http://localhost:8080/live-graph/DJI-DayGain.txt?random=" + randomString , function(err3, rows3){
+  function unpack(rows3, key2) {
+  return rows3.map(function(row) { return row[key2]; });
+}
+Plotly.d3.csv("http://localhost:8080/live-graph/NASDAQ-DayGain.txt?random=" + randomString , function(err4, rows4){
+  function unpack(rows4, key3) {
+  return rows4.map(function(row) { return row[key3]; });
+}
+Plotly.d3.csv("http://localhost:8080/live-graph/SP500-DayGain.txt?random=" + randomString , function(err5, rows5){
+  function unpack(rows5, key4) {
+  return rows5.map(function(row) { return row[key4]; });
+}
+
+var d = new Date();
+
+d.setDate(d.getDate()-1);
+
+var trace1 = {
+  type: "scatter",
+  mode: "lines",
+  name: 'Akash - DG %',
+  x: unpack(rows, 'Date'),
+  y: unpack(rows, 'DayGainPercentage'),
+  line: {color: '#17BECF', width: 3}
+}
+
+var trace3 = {
+  type: "scatter",
+  mode: "lines",
+  name: 'DJI - DG %',
+  x: unpack(rows3, 'Date'),
+  y: unpack(rows3, 'DayGainPercentage'),
+  line: {color: '#B0B0B0',dash: 'dot'}
+}
+
+var trace4 = {
+  type: "scatter",
+  mode: "lines",
+  name: 'NASDAQ - DG %',
+  x: unpack(rows4, 'Date'),
+  y: unpack(rows4, 'DayGainPercentage'),
+  line: {color: '#000000',dash: 'dot'}
+}
+
+var trace5 = {
+  type: "scatter",
+  mode: "lines",
+  name: 'SP500 - DG %',
+  x: unpack(rows5, 'Date'),
+  y: unpack(rows5, 'DayGainPercentage'),
+  line: {color: '#4D62F7',dash: 'dot'}
+}
+
+var data = [trace1,trace3,trace4,trace5];
+
+var layout = {
+  title: 'Day Gain/Loss %',
+  autosize: false,
+  width: 850,
+  height: 500,
+  xaxis: {
+    autorange: false,
+    range: [new Date().toISOString().slice(0,10) + " 09:00", new Date().toISOString().slice(0,10) + " 17:30"],
+    default: '1d',
+    rangeselector: {buttons: [
+        {
+          count: 1,
+          label: '1d',
+          step: 'day',
+          stepmode: 'backward',
+        },
+        {
+          count: 2,
+          label: '2d',
+          step: 'day',
+          stepmode: 'backward'
+        },
+        {
+          count: 7,
+          label: '1w',
+          step: 'day',
+          stepmode: 'backward'
+        },
+        {
+          count: 14,
+          label: '2w',
+          step: 'day',
+          stepmode: 'backward'
+        },
+        {
+          count: 1,
+          label: '1m',
+          step: 'month',
+          stepmode: 'backward'
+        },
+        {
+          count: 1,
+          label: '1y',
+          step: 'year',
+          stepmode: 'backward'
+        },
+        {
+          step: 'all'
+        }
+      ]},
+    type: 'date'
+  },
+  yaxis: {
+    autorange: true,
+    range: [-5, 5],
+    type: 'linear'
+  }
+};
+
+Plotly.newPlot('myDiv', data, layout);
+setTimeout(fetchCSV, 300000, randomStringFn(8));
+})
+})
+})
+})
+
+const fetchCSV2 = (randomString) => Plotly.d3.csv("http://localhost:8080/live-graph/Akash-OverallGain.txt?random=" + randomString, function(err, rows){
+  function unpack(rows, key) {
+  return rows.map(function(row) { return row[key]; });
+}
+
+var d = new Date();
+d.setDate(d.getDate()-1);
+var trace1 = {
+  type: "scatter",
+  mode: "lines",
+  name: 'Akash - OG %',
+  x: unpack(rows, 'Date'),
+  y: unpack(rows, 'OverallGainPercentage'),
+  line: {color: '#17BECF',width: 3}
+}
+
+var data = [trace1];
+
+var layout = {
+  title: 'Overall Gain/Loss %',
+  autosize: false,
+  width: 850,
+  height: 500,
+  xaxis: {
+    autorange: false,
+    range: [new Date().toISOString().slice(0,10) + " 09:00", new Date().toISOString().slice(0,10) + " 17:30"],
+    default: '1d',
+    rangeselector: {buttons: [
+        {
+          count: 1,
+          label: '1d',
+          step: 'day',
+          stepmode: 'backward',
+        },
+        {
+          count: 2,
+          label: '2d',
+          step: 'day',
+          stepmode: 'backward'
+        },
+        {
+          count: 7,
+          label: '1w',
+          step: 'day',
+          stepmode: 'backward'
+        },
+        {
+          count: 14,
+          label: '2w',
+          step: 'day',
+          stepmode: 'backward'
+        },
+        {
+          count: 1,
+          label: '1m',
+          step: 'month',
+          stepmode: 'backward'
+        },
+        {
+          count: 1,
+          label: '1y',
+          step: 'year',
+          stepmode: 'backward'
+        },
+        {
+          step: 'all'
+        }
+      ]},
+    type: 'date'
+  },
+  yaxis: {
+    autorange: true,
+    range: [-5, 5],
+    type: 'linear'
+  }
+};
+
+Plotly.newPlot('myDiv2', data, layout);
+setTimeout(fetchCSV2, 300000, randomStringFn(8));
+})
+
+fetchCSV(randomStringFn(8));
+fetchCSV2(randomStringFn(8));
+</script>
