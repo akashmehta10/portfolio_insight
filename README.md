@@ -11,3 +11,9 @@ It also lets you store your portfolio performance data in raw form, which can be
 
 ## Screen2
 ![](design/screen2-insight.png)
+
+## Day Gain Raw Data (For Analysis)
+![](design/screen-day-gain.png)
+
+## Overall Gain Raw Data (For Analysis)
+![](design/screen-overall-gain.png)
